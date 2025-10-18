@@ -10,10 +10,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        :root {
+            --background-light: #f9fafb; /* gray-50 */
+            --background-dark: #111827; /* gray-900 */
+            --text-light: #1f2937; /* gray-800 */
+            --text-dark: #f3f4f6; /* gray-100 */
+        }
+        html.dark {
+             color-scheme: dark;
+        }
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #111827; /* bg-gray-900 */
-            color: #f3f4f6; /* text-gray-100 */
+            background-color: var(--background-light);
+            color: var(--text-light);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        html.dark body {
+            background-color: var(--background-dark);
+            color: var(--text-dark);
         }
         .section {
             opacity: 0;
@@ -25,9 +39,13 @@
             transform: translateY(0);
         }
         .navbar-glass {
-            background-color: rgba(17, 24, 39, 0.8);
+            background-color: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e5e7eb; /* gray-200 */
+        }
+        html.dark .navbar-glass {
+            background-color: rgba(17, 24, 39, 0.8);
             border-bottom: 1px solid rgba(55, 65, 81, 0.5);
         }
         .typed-cursor {
@@ -43,8 +61,13 @@
             50% { opacity: 0; }
         }
         .skill-card {
-            background-color: #1f2937; /* bg-gray-800 */
+            background-color: #ffffff; /* white */
             transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #e5e7eb; /* gray-200 */
+        }
+        html.dark .skill-card {
+            background-color: #1f2937; /* bg-gray-800 */
+            border-color: #374151; /* gray-700 */
         }
         .skill-card:hover {
             transform: translateY(-5px);
@@ -53,13 +76,16 @@
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -30px;
+            left: -31px;
             top: 0;
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background-color: #1f2937; /* bg-gray-800 */
+            background-color: var(--background-light);
             border: 4px solid #38bdf8; /* border-sky-400 */
+        }
+        html.dark .timeline-item::before {
+            background-color: var(--background-dark);
         }
     </style>
 </head>
@@ -68,73 +94,83 @@
     <!-- Header / Navbar -->
     <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 navbar-glass">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#home" class="text-2xl font-bold text-white">Portfolio</a>
-            <nav class="hidden md:flex space-x-8">
-                <a href="#about" class="text-gray-300 hover:text-sky-400 transition">About</a>
-                <a href="#skills" class="text-gray-300 hover:text-sky-400 transition">Skills</a>
-                <a href="#experience" class="text-gray-300 hover:text-sky-400 transition">Experience</a>
-                <a href="#projects" class="text-gray-300 hover:text-sky-400 transition">Projects</a>
-                <a href="#contact" class="text-gray-300 hover:text-sky-400 transition">Contact</a>
+            <a href="#home" class="text-2xl font-bold text-gray-900 dark:text-white">Portfolio</a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="text-gray-600 dark:text-gray-300 hover:text-sky-500 dark:hover:text-sky-400 transition">About</a>
+                <a href="#skills" class="text-gray-600 dark:text-gray-300 hover:text-sky-500 dark:hover:text-sky-400 transition">Skills</a>
+                <a href="#experience" class="text-gray-600 dark:text-gray-300 hover:text-sky-500 dark:hover:text-sky-400 transition">Experience</a>
+                <a href="#projects" class="text-gray-600 dark:text-gray-300 hover:text-sky-500 dark:hover:text-sky-400 transition">Projects</a>
+                <a href="#contact" class="text-gray-600 dark:text-gray-300 hover:text-sky-500 dark:hover:text-sky-400 transition">Contact</a>
+                <button id="theme-toggle" class="text-gray-600 dark:text-gray-300 hover:text-sky-500 dark:hover:text-sky-400 transition focus:outline-none">
+                    <i class="fas fa-moon text-xl"></i>
+                </button>
             </nav>
-            <button id="mobile-menu-button" class="md:hidden text-gray-300 focus:outline-none">
+            <button id="mobile-menu-button" class="md:hidden text-gray-600 dark:text-gray-300 focus:outline-none">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden">
-            <a href="#about" class="block py-2 px-6 text-gray-300 hover:bg-gray-800">About</a>
-            <a href="#skills" class="block py-2 px-6 text-gray-300 hover:bg-gray-800">Skills</a>
-            <a href="#experience" class="block py-2 px-6 text-gray-300 hover:bg-gray-800">Experience</a>
-            <a href="#projects" class="block py-2 px-6 text-gray-300 hover:bg-gray-800">Projects</a>
-            <a href="#contact" class="block py-2 px-6 text-gray-300 hover:bg-gray-800">Contact</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800">
+            <a href="#about" class="block py-2 px-6 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">About</a>
+            <a href="#skills" class="block py-2 px-6 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Skills</a>
+            <a href="#experience" class="block py-2 px-6 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Experience</a>
+            <a href="#projects" class="block py-2 px-6 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Projects</a>
+            <a href="#contact" class="block py-2 px-6 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Contact</a>
         </div>
     </header>
 
     <main class="container mx-auto px-6">
 
         <!-- Home Section -->
-        <section id="home" class="min-h-screen flex flex-col justify-center items-start">
-            <div class="max-w-3xl">
-                <h1 class="text-5xl md:text-7xl font-bold leading-tight">Hi, I'm Smeet Patel</h1>
-                <h2 class="text-2xl md:text-4xl font-semibold text-sky-400 mt-4">
-                    I am a <span id="typed-text"></span><span class="typed-cursor"></span>
-                </h2>
-                <p class="mt-6 text-lg text-gray-400 max-w-2xl">
-                    A passionate Full Stack Developer with experience in building robust backend systems and a keen interest in data science. Currently pursuing my M.Tech in Computer Science at Delhi Technological University.
-                </p>
-                <div class="mt-8 flex space-x-4">
-                    <a href="https://github.com/smeetpatel2530" target="_blank" class="text-gray-400 hover:text-sky-400 transition text-3xl"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/smeet-patel-22b67a193/" target="_blank" class="text-gray-400 hover:text-sky-400 transition text-3xl"><i class="fab fa-linkedin"></i></a>
-                    <a href="mailto:smeetpatel2530@gmail.com" class="text-gray-400 hover:text-sky-400 transition text-3xl"><i class="fas fa-envelope"></i></a>
+        <section id="home" class="min-h-screen flex items-center justify-center">
+            <div class="flex flex-col-reverse lg:flex-row items-center justify-center gap-16 w-full">
+                <!-- Text Content -->
+                <div class="max-w-2xl text-center lg:text-left">
+                    <h1 class="text-5xl md:text-7xl font-bold leading-tight">Hi, I'm Smeet Patel</h1>
+                    <h2 class="text-2xl md:text-4xl font-semibold text-sky-500 dark:text-sky-400 mt-4">
+                        I am a <span id="typed-text"></span><span class="typed-cursor"></span>
+                    </h2>
+                    <p class="mt-6 text-lg text-gray-500 dark:text-gray-400 max-w-xl mx-auto lg:mx-0">
+                        A passionate Full Stack Developer with experience in building robust backend systems and a keen interest in data science. Currently pursuing my M.Tech in Computer Science at Delhi Technological University.
+                    </p>
+                    <div class="mt-8 flex space-x-4 justify-center lg:justify-start">
+                        <a href="https://github.com/smeetpatel2530" target="_blank" class="text-gray-500 dark:text-gray-400 hover:text-sky-500 dark:hover:text-sky-400 transition text-3xl"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/smeet-patel-22b67a193/" target="_blank" class="text-gray-500 dark:text-gray-400 hover:text-sky-500 dark:hover:text-sky-400 transition text-3xl"><i class="fab fa-linkedin"></i></a>
+                        <a href="mailto:smeetpatel2530@gmail.com" class="text-gray-500 dark:text-gray-400 hover:text-sky-500 dark:hover:text-sky-400 transition text-3xl"><i class="fas fa-envelope"></i></a>
+                    </div>
+                    <div class="mt-10">
+                        <a href="Main Resume (full stack and data science).pdf" download="SmeetPatel-Resume.pdf" class="bg-sky-500 text-white font-semibold px-8 py-3 rounded-lg hover:bg-sky-600 transition shadow-lg shadow-sky-500/20">
+                            Download Resume <i class="fas fa-download ml-2"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="mt-10">
-                    <a href="Main Resume (full stack and data science).pdf" download="SmeetPatel-Resume.pdf" class="bg-sky-500 text-white font-semibold px-8 py-3 rounded-lg hover:bg-sky-600 transition shadow-lg shadow-sky-500/20">
-                        Download Resume <i class="fas fa-download ml-2"></i>
-                    </a>
+                <!-- Image -->
+                <div class="flex-shrink-0">
+                    <!-- Replace the src with your actual image URL -->
+                    <img src="https://placehold.co/400x400/e0e7ff/1f2937?text=S.P" alt="Smeet Patel" class="rounded-full w-64 h-64 md:w-80 md:h-80 object-cover border-8 border-gray-200 dark:border-gray-700 shadow-xl">
                 </div>
             </div>
         </section>
 
         <!-- About Section -->
         <section id="about" class="section py-20">
-            <h2 class="text-4xl font-bold text-center mb-12">About <span class="text-sky-400">Me</span></h2>
-            <div class="flex flex-col md:flex-row items-center gap-12">
-                <div class="md:w-2/3">
-                    <h3 class="text-3xl font-semibold mb-4">I'm a Developer and a Learner</h3>
-                    <p class="text-gray-400 mb-4">
+            <h2 class="text-4xl font-bold text-center mb-12">About <span class="text-sky-500 dark:text-sky-400">Me</span></h2>
+            <div class="max-w-4xl mx-auto">
+                <!-- Content -->
+                <div>
+                    <h3 class="text-3xl font-semibold mb-4 text-center">I'm a Developer and a Learner</h3>
+                    <p class="text-gray-500 dark:text-gray-400 mb-4 text-center md:text-left">
                         I began my journey in tech during my Bachelor's in Computer Engineering, developing a strong foundation in core concepts like Data Structures, Algorithms, and Object-Oriented Programming. My professional experience as an Associate Programmer at Uffizio allowed me to apply these skills to real-world challenges, where I developed and optimized complex backend modules using Java, Spring, and Kafka.
                     </p>
-                    <p class="text-gray-400">
+                    <p class="text-gray-500 dark:text-gray-400 mb-6 text-center md:text-left">
                         I am driven by a passion for solving complex problems and building efficient, scalable software solutions. My internship experiences exposed me to both full-stack development and data analytics, sparking my interest in the intersection of these fields. I am constantly exploring new technologies and am now deepening my expertise through my Master's program.
                     </p>
-                </div>
-                <div class="md:w-1/3">
-                    <div class="bg-gray-800 p-6 rounded-lg shadow-xl">
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 mt-8 max-w-md mx-auto">
                         <ul class="space-y-3">
-                            <li><i class="fas fa-user mr-3 text-sky-400"></i><strong>Name:</strong> Smeet Patel</li>
-                            <li><i class="fas fa-envelope mr-3 text-sky-400"></i><strong>Email:</strong> smeetpatel2530@gmail.com</li>
-                            <li><i class="fas fa-map-marker-alt mr-3 text-sky-400"></i><strong>From:</strong> Delhi, India</li>
-                            <li><i class="fas fa-graduation-cap mr-3 text-sky-400"></i><strong>Education:</strong> M.Tech in CS (Ongoing)</li>
+                            <li><i class="fas fa-user mr-3 text-sky-500 dark:text-sky-400"></i><strong>Name:</strong> Smeet Patel</li>
+                            <li><i class="fas fa-envelope mr-3 text-sky-500 dark:text-sky-400"></i><strong>Email:</strong> smeetpatel2530@gmail.com</li>
+                            <li><i class="fas fa-map-marker-alt mr-3 text-sky-500 dark:text-sky-400"></i><strong>From:</strong> Delhi, India</li>
+                            <li><i class="fas fa-graduation-cap mr-3 text-sky-500 dark:text-sky-400"></i><strong>Education:</strong> M.Tech in CS (Ongoing)</li>
                         </ul>
                     </div>
                 </div>
@@ -143,47 +179,51 @@
 
         <!-- Skills Section -->
         <section id="skills" class="section py-20">
-            <h2 class="text-4xl font-bold text-center mb-12">My <span class="text-sky-400">Skills</span></h2>
+            <h2 class="text-4xl font-bold text-center mb-12">My <span class="text-sky-500 dark:text-sky-400">Skills</span></h2>
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
+                <div class="skill-card p-6 text-center rounded-lg">
+                    <svg class="w-16 h-16 mx-auto text-sky-500 dark:text-sky-400" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>C++</title><path fill="currentColor" d="M14.93,12.21A0.5,0.5,0,0,0,14.5,12.5V14.5A0.5,0.5,0,0,0,15,15H17A0.5,0.5,0,0,0,17.5,14.5V12.5A0.5,0.5,0,0,0,17,12H15A0.5,0.5,0,0,0,14.93,12.21Z M21,12.5V14.5A0.5,0.5,0,0,0,21.5,15H23.5A0.5,0.5,0,0,0,24,14.5V12.5A0.5,0.5,0,0,0,23.5,12H21.5A0.5,0.5,0,0,0,21,12.5Z M18,15.5V17.5A0.5,0.5,0,0,0,18.5,18H20.5A0.5,0.5,0,0,0,21,17.5V15.5A0.5,0.5,0,0,0,20.5,15H18.5A0.5,0.5,0,0,0,18,15.5Z M12.89,3.42A2,2,0,0,0,11.1,2.56,12.44,12.44,0,0,0,0,12,12.43,12.43,0,0,0,12.56,24a12.4,12.4,0,0,0,7.28-2.28,11.33,11.33,0,0,0,2.16-3.21,12.16,12.16,0,0,0-18-6.9,10.33,10.33,0,0,1,10.19-9.1A2,2,0,0,0,12.89,3.42Z"/></svg>
+                    <p class="mt-4 font-semibold">C++</p>
+                </div>
                 <!-- Skill examples - you can find more icons from devicon.dev -->
                 <div class="skill-card p-6 text-center rounded-lg">
-                    <i class="fab fa-java text-6xl text-sky-400"></i>
+                    <i class="fab fa-java text-6xl text-sky-500 dark:text-sky-400"></i>
                     <p class="mt-4 font-semibold">Java</p>
                 </div>
                 <div class="skill-card p-6 text-center rounded-lg">
-                    <i class="fab fa-python text-6xl text-sky-400"></i>
+                    <i class="fab fa-python text-6xl text-sky-500 dark:text-sky-400"></i>
                     <p class="mt-4 font-semibold">Python</p>
                 </div>
                 <div class="skill-card p-6 text-center rounded-lg">
-                    <i class="fab fa-js-square text-6xl text-sky-400"></i>
+                    <i class="fab fa-js-square text-6xl text-sky-500 dark:text-sky-400"></i>
                     <p class="mt-4 font-semibold">JavaScript</p>
                 </div>
                  <div class="skill-card p-6 text-center rounded-lg">
-                    <i class="fab fa-react text-6xl text-sky-400"></i>
+                    <i class="fab fa-react text-6xl text-sky-500 dark:text-sky-400"></i>
                     <p class="mt-4 font-semibold">React.js</p>
                 </div>
                 <div class="skill-card p-6 text-center rounded-lg">
-                    <svg class="w-16 h-16 mx-auto text-sky-400" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Spring</title><path d="M21.53.38a1.2 1.2 0 00-1.28.3L3.13 14.9a1.04 1.04 0 00-.33.8v.1c0 .4.23.78.6.95l1.05.47c.36.16.78.07 1.05-.2l13.7-13.7c.36-.36.4-1 .1-1.35a1.2 1.2 0 00-.77-.59zM2.47 23.62a1.2 1.2 0 001.28-.3L20.87 9.1a1.04 1.04 0 00.33-.8v-.1c0-.4-.23-.78-.6-.95l-1.05-.47c-.36-.16-.78-.07-1.05.2L4.8 20.68c-.36.36-.4 1-.1 1.35.2.35.5.58.92.59h.03a1.2 1.2 0 00-.18.99v.01zm1.25-2.05A2.32 2.32 0 014.28 20a2.32 2.32 0 011.56-1.56 2.32 2.32 0 011.56 1.56 2.32 2.32 0 01-1.56 1.56 2.3 2.3 0 01-1.56-1.56z" fill="currentColor"/></svg>
+                    <svg class="w-16 h-16 mx-auto text-sky-500 dark:text-sky-400" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Spring</title><path d="M21.53.38a1.2 1.2 0 00-1.28.3L3.13 14.9a1.04 1.04 0 00-.33.8v.1c0 .4.23.78.6.95l1.05.47c.36.16.78.07 1.05-.2l13.7-13.7c.36-.36.4-1 .1-1.35a1.2 1.2 0 00-.77-.59zM2.47 23.62a1.2 1.2 0 001.28-.3L20.87 9.1a1.04 1.04 0 00.33-.8v-.1c0-.4-.23-.78-.6-.95l-1.05-.47c-.36-.16-.78-.07-1.05.2L4.8 20.68c-.36.36-.4 1-.1 1.35.2.35.5.58.92.59h.03a1.2 1.2 0 00-.18.99v.01zm1.25-2.05A2.32 2.32 0 014.28 20a2.32 2.32 0 011.56-1.56 2.32 2.32 0 011.56 1.56 2.32 2.32 0 01-1.56 1.56 2.3 2.3 0 01-1.56-1.56z" fill="currentColor"/></svg>
                     <p class="mt-4 font-semibold">Spring Boot</p>
                 </div>
                 <div class="skill-card p-6 text-center rounded-lg">
-                    <i class="fas fa-database text-6xl text-sky-400"></i>
+                    <i class="fas fa-database text-6xl text-sky-500 dark:text-sky-400"></i>
                     <p class="mt-4 font-semibold">SQL</p>
                 </div>
                 <div class="skill-card p-6 text-center rounded-lg">
-                    <i class="fab fa-html5 text-6xl text-sky-400"></i>
+                    <i class="fab fa-html5 text-6xl text-sky-500 dark:text-sky-400"></i>
                     <p class="mt-4 font-semibold">HTML5</p>
                 </div>
                 <div class="skill-card p-6 text-center rounded-lg">
-                    <i class="fab fa-css3-alt text-6xl text-sky-400"></i>
+                    <i class="fab fa-css3-alt text-6xl text-sky-500 dark:text-sky-400"></i>
                     <p class="mt-4 font-semibold">CSS3</p>
                 </div>
                 <div class="skill-card p-6 text-center rounded-lg">
-                    <i class="fab fa-git-alt text-6xl text-sky-400"></i>
+                    <i class="fab fa-git-alt text-6xl text-sky-500 dark:text-sky-400"></i>
                     <p class="mt-4 font-semibold">Git</p>
                 </div>
                 <div class="skill-card p-6 text-center rounded-lg">
-                    <i class="fab fa-github text-6xl text-sky-400"></i>
+                    <i class="fab fa-github text-6xl text-sky-500 dark:text-sky-400"></i>
                     <p class="mt-4 font-semibold">GitHub</p>
                 </div>
             </div>
@@ -195,31 +235,31 @@
             <div class="grid md:grid-cols-2 gap-16">
                 <!-- Education Column -->
                 <div>
-                    <h3 class="text-3xl font-semibold mb-8 text-sky-400 flex items-center gap-4"><i class="fas fa-graduation-cap"></i> Education</h3>
-                    <div class="relative border-l-2 border-gray-700 pl-10 space-y-12">
+                    <h3 class="text-3xl font-semibold mb-8 text-sky-500 dark:text-sky-400 flex items-center gap-4"><i class="fas fa-graduation-cap"></i> Education</h3>
+                    <div class="relative border-l-2 border-gray-200 dark:border-gray-700 pl-10 space-y-12">
                          <div class="timeline-item">
                             <h4 class="text-xl font-semibold">M.Tech in Computer Science & Engineering</h4>
-                            <p class="text-gray-400">Delhi Technological University (Formerly DCE), Delhi</p>
-                            <p class="text-sky-400 text-sm mt-1">2025 - 2027</p>
+                            <p class="text-gray-500 dark:text-gray-400">Delhi Technological University (Formerly DCE), Delhi</p>
+                            <p class="text-sky-500 dark:text-sky-400 text-sm mt-1">2025 - 2027</p>
                         </div>
                         <div class="timeline-item">
                             <h4 class="text-xl font-semibold">B.Tech in Computer Engineering</h4>
-                            <p class="text-gray-400">Gujarat Technological University, Gujarat</p>
-                             <p class="text-gray-500">CGPA: 8.56</p>
-                            <p class="text-sky-400 text-sm mt-1">2019 - 2023</p>
+                            <p class="text-gray-500 dark:text-gray-400">Gujarat Technological University, Gujarat</p>
+                             <p class="text-gray-400 dark:text-gray-500">CGPA: 8.56</p>
+                            <p class="text-sky-500 dark:text-sky-400 text-sm mt-1">2019 - 2023</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Experience Column -->
                 <div>
-                    <h3 class="text-3xl font-semibold mb-8 text-sky-400 flex items-center gap-4"><i class="fas fa-briefcase"></i> Experience</h3>
-                    <div class="relative border-l-2 border-gray-700 pl-10 space-y-12">
+                    <h3 class="text-3xl font-semibold mb-8 text-sky-500 dark:text-sky-400 flex items-center gap-4"><i class="fas fa-briefcase"></i> Experience</h3>
+                    <div class="relative border-l-2 border-gray-200 dark:border-gray-700 pl-10 space-y-12">
                         <div class="timeline-item">
                             <h4 class="text-xl font-semibold">Associate Programmer</h4>
-                            <p class="text-gray-400">Uffizio - Valsad, Gujarat</p>
-                            <p class="text-sky-400 text-sm mt-1">Sep 2023 - Jul 2024</p>
-                            <ul class="list-disc list-inside mt-3 text-gray-400 space-y-1">
+                            <p class="text-gray-500 dark:text-gray-400">Uffizio - Valsad, Gujarat</p>
+                            <p class="text-sky-500 dark:text-sky-400 text-sm mt-1">Sep 2023 - Jul 2024</p>
+                            <ul class="list-disc list-inside mt-3 text-gray-500 dark:text-gray-400 space-y-1">
                                 <li>Developed complex backend modules in Java and integrated APIs.</li>
                                 <li>Optimized code paths leading to a 5% reduction in codebase.</li>
                                 <li>Collaborated with teams using GitHub & JIRA for project delivery.</li>
@@ -227,9 +267,9 @@
                         </div>
                         <div class="timeline-item">
                             <h4 class="text-xl font-semibold">Internship Trainee</h4>
-                            <p class="text-gray-400">Uffizio - Valsad, Gujarat</p>
-                            <p class="text-sky-400 text-sm mt-1">Jan 2023 - Aug 2023</p>
-                             <ul class="list-disc list-inside mt-3 text-gray-400 space-y-1">
+                            <p class="text-gray-500 dark:text-gray-400">Uffizio - Valsad, Gujarat</p>
+                            <p class="text-sky-500 dark:text-sky-400 text-sm mt-1">Jan 2023 - Aug 2023</p>
+                             <ul class="list-disc list-inside mt-3 text-gray-500 dark:text-gray-400 space-y-1">
                                 <li>Designed and maintained Java-based modules for a VTS.</li>
                                 <li>Worked with MySQL for data storage and retrieval.</li>
                                 <li>Built responsive UI screens using HTML, CSS, and JavaScript.</li>
@@ -237,9 +277,9 @@
                         </div>
                          <div class="timeline-item">
                             <h4 class="text-xl font-semibold">Summer Intern</h4>
-                            <p class="text-gray-400">InfoLabz IT Services Pvt. Ltd. - Ahmedabad, Gujarat</p>
-                            <p class="text-sky-400 text-sm mt-1">Jun 2022 - Jul 2022</p>
-                             <ul class="list-disc list-inside mt-3 text-gray-400 space-y-1">
+                            <p class="text-gray-500 dark:text-gray-400">InfoLabz IT Services Pvt. Ltd. - Ahmedabad, Gujarat</p>
+                            <p class="text-sky-500 dark:text-sky-400 text-sm mt-1">Jun 2022 - Jul 2022</p>
+                             <ul class="list-disc list-inside mt-3 text-gray-500 dark:text-gray-400 space-y-1">
                                 <li>Applied Data Analytics & ML to analyze API data.</li>
                                 <li>Implemented regression models for predictive analysis.</li>
                             </ul>
@@ -251,35 +291,35 @@
 
         <!-- Projects Section -->
         <section id="projects" class="section py-20">
-            <h2 class="text-4xl font-bold text-center mb-12">Featured <span class="text-sky-400">Projects</span></h2>
+            <h2 class="text-4xl font-bold text-center mb-12">Featured <span class="text-sky-500 dark:text-sky-400">Projects</span></h2>
             <div class="grid md:grid-cols-2 gap-8">
                 <!-- Project 1 -->
-                <div class="bg-gray-800 rounded-lg overflow-hidden group">
+                <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden group border border-gray-200 dark:border-gray-700">
                     <div class="p-6">
                         <h3 class="text-2xl font-semibold mb-2">University Blogging Application</h3>
-                        <p class="text-gray-400 mb-4">A full-stack blogging platform for university students featuring user authentication, blog publishing, and media management.</p>
+                        <p class="text-gray-500 dark:text-gray-400 mb-4">A full-stack blogging platform for university students featuring user authentication, blog publishing, and media management.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">Spring Boot</span>
-                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">Java</span>
-                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">Full Stack</span>
+                            <span class="bg-sky-100 text-sky-800 dark:bg-sky-900/50 dark:text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">Spring Boot</span>
+                            <span class="bg-sky-100 text-sky-800 dark:bg-sky-900/50 dark:text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">Java</span>
+                            <span class="bg-sky-100 text-sky-800 dark:bg-sky-900/50 dark:text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">Full Stack</span>
                         </div>
-                        <a href="https://github.com/smeetpatel2530" target="_blank" class="text-sky-400 hover:text-sky-300 font-semibold">
+                        <a href="https://github.com/smeetpatel2530" target="_blank" class="text-sky-500 dark:text-sky-400 hover:text-sky-600 dark:hover:text-sky-300 font-semibold">
                             View on GitHub <i class="fas fa-arrow-right ml-1"></i>
                         </a>
                     </div>
                 </div>
                 <!-- Project 2 -->
-                <div class="bg-gray-800 rounded-lg overflow-hidden group">
+                <div class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden group border border-gray-200 dark:border-gray-700">
                     <div class="p-6">
                         <h3 class="text-2xl font-semibold mb-2">Smart Scheduler AI</h3>
-                        <p class="text-gray-400 mb-4">An Agentic AI scheduling assistant that automatically creates and manages Google Calendar events from natural language commands.</p>
+                        <p class="text-gray-500 dark:text-gray-400 mb-4">An Agentic AI scheduling assistant that automatically creates and manages Google Calendar events from natural language commands.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">React</span>
-                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">Node.js</span>
-                            <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">AI/NLP</span>
-                             <span class="bg-sky-900/50 text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">Google Calendar API</span>
+                            <span class="bg-sky-100 text-sky-800 dark:bg-sky-900/50 dark:text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">React</span>
+                            <span class="bg-sky-100 text-sky-800 dark:bg-sky-900/50 dark:text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">Node.js</span>
+                            <span class="bg-sky-100 text-sky-800 dark:bg-sky-900/50 dark:text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">AI/NLP</span>
+                             <span class="bg-sky-100 text-sky-800 dark:bg-sky-900/50 dark:text-sky-300 text-xs font-semibold px-2.5 py-1 rounded-full">Google Calendar API</span>
                         </div>
-                        <a href="https://github.com/smeetpatel2530" target="_blank" class="text-sky-400 hover:text-sky-300 font-semibold">
+                        <a href="https://github.com/smeetpatel2530" target="_blank" class="text-sky-500 dark:text-sky-400 hover:text-sky-600 dark:hover:text-sky-300 font-semibold">
                             View on GitHub <i class="fas fa-arrow-right ml-1"></i>
                         </a>
                     </div>
@@ -289,18 +329,18 @@
 
         <!-- Contact Section -->
         <section id="contact" class="section py-20">
-            <h2 class="text-4xl font-bold text-center mb-12">Get In <span class="text-sky-400">Touch</span></h2>
+            <h2 class="text-4xl font-bold text-center mb-12">Get In <span class="text-sky-500 dark:text-sky-400">Touch</span></h2>
             <div class="max-w-3xl mx-auto text-center">
-                 <p class="text-lg text-gray-400 mb-8">
+                 <p class="text-lg text-gray-500 dark:text-gray-400 mb-8">
                     I'm always open to discussing new projects, creative ideas, or opportunities to be part of an amazing team. Feel free to reach out to me!
                 </p>
-                <a href="mailto:smeetpatel2530@gmail.com" class="inline-block bg-gray-800 text-xl font-semibold px-8 py-4 rounded-lg hover:bg-gray-700 transition">
+                <a href="mailto:smeetpatel2530@gmail.com" class="inline-block bg-gray-100 dark:bg-gray-800 text-lg font-semibold px-8 py-4 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition border border-gray-200 dark:border-gray-700">
                    <i class="fas fa-envelope mr-3"></i> smeetpatel2530@gmail.com
                 </a>
                 <div class="mt-12 flex justify-center space-x-6">
-                    <a href="https://github.com/smeetpatel2530" target="_blank" class="text-gray-400 hover:text-sky-400 transition text-4xl"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/smeet-patel-22b67a193/" target="_blank" class="text-gray-400 hover:text-sky-400 transition text-4xl"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://smeetpatel.me" target="_blank" class="text-gray-400 hover:text-sky-400 transition text-4xl"><i class="fas fa-globe"></i></a>
+                    <a href="https://github.com/smeetpatel2530" target="_blank" class="text-gray-500 dark:text-gray-400 hover:text-sky-500 dark:hover:text-sky-400 transition text-4xl"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/smeet-patel-22b67a193/" target="_blank" class="text-gray-500 dark:text-gray-400 hover:text-sky-500 dark:hover:text-sky-400 transition text-4xl"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://smeetpatel.me" target="_blank" class="text-gray-500 dark:text-gray-400 hover:text-sky-500 dark:hover:text-sky-400 transition text-4xl"><i class="fas fa-globe"></i></a>
                 </div>
             </div>
         </section>
@@ -308,13 +348,43 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-gray-800">
-        <div class="container mx-auto px-6 py-6 text-center text-gray-500">
+    <footer class="border-t border-gray-200 dark:border-gray-800">
+        <div class="container mx-auto px-6 py-6 text-center text-gray-400 dark:text-gray-500">
             <p>&copy; 2025 Smeet Patel. All Rights Reserved.</p>
         </div>
     </footer>
 
     <script>
+        // --- Theme Toggler ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        const html = document.documentElement;
+
+        // On page load, default to dark unless theme is explicitly set to light
+        if (localStorage.theme === 'light') {
+            html.classList.remove('dark');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        } else {
+            html.classList.add('dark');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            if (html.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                localStorage.theme = 'light';
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+
         // --- Mobile Menu Toggle ---
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -382,5 +452,6 @@
     </script>
 </body>
 </html>
+
 
 
